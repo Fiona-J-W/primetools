@@ -1,4 +1,5 @@
 #include "calculate_primes.hpp"
+#include "utilties.hpp"
 
 #include <algorithm>
 #include <initializer_list>
@@ -43,5 +44,22 @@ BOOST_AUTO_TEST_CASE(test_large_calculate_primes_until) {
 	BOOST_CHECK_EQUAL(primes::calculate_primes_until(65537u).back(), 65537);
 	BOOST_CHECK_EQUAL(primes::calculate_primes_until(100000u).back(), 99991);
 }
+
+
+BOOST_AUTO_TEST_CASE(test_ceiled_integer_root) {
+	BOOST_CHECK_EQUAL(primes::utils::ceiled_integer_root(8), 3);
+	BOOST_CHECK_EQUAL(primes::utils::ceiled_integer_root(9), 3);
+	BOOST_CHECK_EQUAL(primes::utils::ceiled_integer_root(10), 4);
+	BOOST_CHECK_EQUAL(primes::utils::ceiled_integer_root(11), 4);
+	BOOST_CHECK_EQUAL(primes::utils::ceiled_integer_root(16), 4);
+	BOOST_CHECK_EQUAL(primes::utils::ceiled_integer_root(10000), 100);
+	BOOST_CHECK_EQUAL(primes::utils::ceiled_integer_root(100000000), 10000);
+	BOOST_CHECK_EQUAL(primes::utils::ceiled_integer_root(4611686009837453316u), 2147483646u);
+	BOOST_CHECK_EQUAL(primes::utils::ceiled_integer_root(18446744056529682436u), 4294967294u);
+	BOOST_CHECK_EQUAL(primes::utils::ceiled_integer_root(18446744056529682437u), 4294967296u);
+	BOOST_CHECK_EQUAL(primes::utils::ceiled_integer_root(18446744073709551614u), 4294967296u);
+	BOOST_CHECK_EQUAL(primes::utils::ceiled_integer_root(18446744073709551615u), 4294967296u);
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()
