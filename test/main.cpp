@@ -1,4 +1,5 @@
 #include "calculate_primes.hpp"
+#include "is_prime.hpp"
 #include "utilties.hpp"
 
 #include <algorithm>
@@ -43,6 +44,59 @@ BOOST_AUTO_TEST_CASE(test_small_calculate_primes_until) {
 BOOST_AUTO_TEST_CASE(test_large_calculate_primes_until) {
 	BOOST_CHECK_EQUAL(primes::calculate_primes_until(65537u).back(), 65537);
 	BOOST_CHECK_EQUAL(primes::calculate_primes_until(100000u).back(), 99991);
+}
+
+BOOST_AUTO_TEST_CASE(test_is_prime_no_precalc) {
+	BOOST_CHECK(primes::is_prime(2));
+	BOOST_CHECK(primes::is_prime(3));
+	BOOST_CHECK(primes::is_prime(5));
+	BOOST_CHECK(primes::is_prime(7));
+	BOOST_CHECK(primes::is_prime(11));
+	BOOST_CHECK(primes::is_prime(13));
+	BOOST_CHECK(primes::is_prime(17));
+	BOOST_CHECK(primes::is_prime(19));
+	BOOST_CHECK(primes::is_prime(199));
+	BOOST_CHECK(primes::is_prime(65521));
+	BOOST_CHECK(primes::is_prime(99991));
+
+	BOOST_CHECK(!primes::is_prime(0));
+	BOOST_CHECK(!primes::is_prime(1));
+	BOOST_CHECK(!primes::is_prime(4));
+	BOOST_CHECK(!primes::is_prime(6));
+	BOOST_CHECK(!primes::is_prime(9));
+	BOOST_CHECK(!primes::is_prime(15));
+	BOOST_CHECK(!primes::is_prime(25));
+	BOOST_CHECK(!primes::is_prime(99993));
+	BOOST_CHECK(!primes::is_prime(123456));
+	BOOST_CHECK(!primes::is_prime(111111));
+	BOOST_CHECK(!primes::is_prime(1234567890));
+}
+
+BOOST_AUTO_TEST_CASE(test_is_prime_precalc) {
+	const auto primes = primes::calculate_primes_until(primes::utils::ceiled_integer_root(1234567890));
+	BOOST_CHECK(primes::is_prime(2, primes));
+	BOOST_CHECK(primes::is_prime(3, primes));
+	BOOST_CHECK(primes::is_prime(5, primes));
+	BOOST_CHECK(primes::is_prime(7, primes));
+	BOOST_CHECK(primes::is_prime(11, primes));
+	BOOST_CHECK(primes::is_prime(13, primes));
+	BOOST_CHECK(primes::is_prime(17, primes));
+	BOOST_CHECK(primes::is_prime(19, primes));
+	BOOST_CHECK(primes::is_prime(199, primes));
+	BOOST_CHECK(primes::is_prime(65521, primes));
+	BOOST_CHECK(primes::is_prime(99991, primes));
+
+	BOOST_CHECK(!primes::is_prime(0, primes));
+	BOOST_CHECK(!primes::is_prime(1, primes));
+	BOOST_CHECK(!primes::is_prime(4, primes));
+	BOOST_CHECK(!primes::is_prime(6, primes));
+	BOOST_CHECK(!primes::is_prime(9, primes));
+	BOOST_CHECK(!primes::is_prime(15, primes));
+	BOOST_CHECK(!primes::is_prime(25, primes));
+	BOOST_CHECK(!primes::is_prime(99993, primes));
+	BOOST_CHECK(!primes::is_prime(123456, primes));
+	BOOST_CHECK(!primes::is_prime(111111, primes));
+	BOOST_CHECK(!primes::is_prime(1234567890, primes));
 }
 
 
