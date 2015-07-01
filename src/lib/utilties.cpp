@@ -1,7 +1,6 @@
 #include "utilties.hpp"
 
 #include <limits>
-#include <iostream>
 
 namespace primes {
 namespace utils {
@@ -22,7 +21,6 @@ std::uintmax_t ceiled_integer_root(std::uintmax_t n) {
 	auto high = std::uintmax_t{1} << std::uintmax_t{sizeof(std::uintmax_t) * 8u / 2u};
 	while (high - low > 4u) {
 		const auto avg = low + (high - low) / 2u;
-		std::cout << "low = " << low << ", high = " << high << ", avg = " << avg << '\n';
 		const auto square = avg * avg;
 		if (square < n) {
 			low = avg;
@@ -31,7 +29,6 @@ std::uintmax_t ceiled_integer_root(std::uintmax_t n) {
 		}
 	}
 	while (low * low < n) {
-		std::cout << "low = " << low << ", n = " << n << '\n';
 		++low;
 	}
 	return low;

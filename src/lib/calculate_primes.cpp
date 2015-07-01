@@ -2,8 +2,8 @@
 
 #include <stdexcept>
 #include <cassert>
-#include <cmath>
-#include <iostream>
+
+#include "utilties.hpp"
 
 namespace primes {
 
@@ -34,7 +34,7 @@ std::vector<std::uintmax_t> calculate_small_primes_until(std::size_t n) {
 	auto candidates = std::vector<std::uint8_t>(n + 1u, 1);
 	candidates[0] = 0;
 	candidates[1] = 0;
-	const auto max_candidat = static_cast<std::size_t>(std::sqrt(n)) + 1u;
+	const auto max_candidat = utils::ceiled_integer_root(n);
 	for (auto i = std::size_t{3}; i <= max_candidat; i += 2) {
 		if (candidates[i] == 0) {
 			continue;
@@ -65,7 +65,6 @@ void calculate_large_primes_until(std::uintmax_t n, std::uintmax_t i, std::vecto
 			}
 		}
 		if (is_prime) {
-			std::cout << "adding " << i << ", " << primes.size() << " primes so far\n";
 			primes.push_back(i);
 		}
 		i+=2;
